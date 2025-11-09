@@ -4,10 +4,10 @@
 
 
 module counter (clk, reset, match_flag, enable_count, trade_count, halt_flag);
-    input  clk;             // system clock
-    input  reset;           // async reset
-    input  match_flag;      // from Matching Engine
-    input  enable_count;    // from FSM Controller
+    input clk;             // system clock
+    input reset;           // async reset
+    input match_flag;      // from Matching Engine
+    input enable_count;    // from FSM Controller
     output [7:0] trade_count; // number of executed trades
     output halt_flag;       // stops system if over threshold
 
