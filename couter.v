@@ -12,8 +12,8 @@ module counter (clk, reset, match_flag, enable_count, trade_count, halt_flag);
     output halt_flag;       // stops system if over threshold
 
     reg [7:0] trade_count;
-    reg       halt_flag;
-    parameter MAX_TRADES = 8'd100;  // threshold for halt
+    reg halt_flag;
+    parameter MAX_TRADES = 8'd100; 
 
     always @(posedge clk or posedge reset) 
     begin
