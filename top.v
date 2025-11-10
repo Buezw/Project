@@ -11,7 +11,7 @@ module top (CLOCK_50, KEY, HEX0, HEX1, HEX2, HEX3, HEX4, HEX5, LEDR);
     wire clk;
     wire reset;
 
-    assign clk   = CLOCK_50;
+    assign clk = CLOCK_50;
     assign reset = ~KEY[0];  
 
     wire [7:0] buy_price;
@@ -39,7 +39,7 @@ module top (CLOCK_50, KEY, HEX0, HEX1, HEX2, HEX3, HEX4, HEX5, LEDR);
     counter counter(clk, reset, match_siganl, enable_count, trade_count, halt_signal);
 
     // 5. Spread Accumulator
-    spread spread(clk, reset, best_bid, best_ask, enable_count, match_siganl, spread_now);
+    spread spread (clk, reset, match_siganl, enable_count, buy_price, sell_price, spread_now);
 
     // 6. Display (HEX + LED)
     display_hex display(buy_price, sell_price, spread_now, trade_count,state,halt_signal, match_siganl,HEX0, HEX1, HEX2, HEX3, HEX4, HEX5, LEDR);
