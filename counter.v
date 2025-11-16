@@ -5,7 +5,7 @@
 module counter (
     input clk,
     input reset,
-    input match_siganl,
+    input match_signal,
     input enable_count,
     output reg [7:0] trade_count,
     output reg halt_signal
@@ -17,9 +17,9 @@ module counter (
         if (reset)
             match_d <= 1'b0;
         else
-            match_d <= match_siganl;
+            match_d <= match_signal;
     end
-    wire match_edge = match_siganl & ~match_d;
+    wire match_edge = match_signal & ~match_d;
 
     always @(posedge clk or posedge reset) begin
         if (reset) begin
