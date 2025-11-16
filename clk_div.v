@@ -9,7 +9,7 @@ module clk_div2 (clk_in, reset, clk_out);
     input reset;      
     output clk_out;  
 
-    reg clk_out
+    reg clk_out;
 
     always @(posedge clk_in or posedge reset)
     begin
