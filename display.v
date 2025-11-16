@@ -56,22 +56,21 @@ endmodule
 // Module: hex2dec
 // =====================================================
 
-module hex2dec (hex1, hex2, dec1, dec2);
-    input [3:0] hex1; 
-    input [3:0] hex2;
-    output [3:0] dec1;
-    output [3:0] dec2;
+module hex2dec (
+    input  [3:0] hex1,    // 低 4 位 (LSB nibble)
+    input  [3:0] hex2,    // 高 4 位 (MSB nibble)
+    output [3:0] dec1,    // 个位 (ones digit, 0~9)
+    output [3:0] dec2     // 十位 (tens digit, 0~9)
+);
 
+    // 把两个 hex digit 拼成一个 8-bit 数 (binary value)
+    wire [7:0] bin_value = {hex2, hex1};   // {MSB, LSB}
 
-    wire [7:0] hex_value;   // Combine the two hex digits to form a complete 8-bit value
+    // 十进制转换：十位 / 个位
+    assign dec2 = bin_value / 10;          // tens
+    assign dec1 = bin_value % 10;          // ones
 
-    // Combine the two 4-bit hex digits into an 8-bit value
-    wire c_out;
-    assign dec1 = (hex1 <= 9) ? hex1 : (hex1 - 4'd10);
-    assign c_out = (hex1 <= 9) ? 0 : 1'b1;
-    assign dec2 = hex2 + c_out;
 endmodule
-
 
 // =====================================================
 // Module: seg7 (7-segment display decoder)
