@@ -1,7 +1,7 @@
-module controller_fsm (clk, reset, match_flag, halt_flag, state, enable_count);
+module controller_fsm (clk, reset, match_signal, halt_flag, state, enable_count);
     input clk;
     input reset;
-    input match_flag;
+    input match_signal;
     input halt_flag;
 
     output reg [1:0] state;
@@ -29,7 +29,7 @@ module controller_fsm (clk, reset, match_flag, halt_flag, state, enable_count);
             IDLE:
                 if (halt_flag)
                     next_state = HALT;
-                else if (match_flag)
+                else if (match_signal)
                     next_state = MATCH;
                 else
                     next_state = IDLE;
@@ -37,7 +37,7 @@ module controller_fsm (clk, reset, match_flag, halt_flag, state, enable_count);
             MATCH:
                 if (halt_flag)
                     next_state = HALT;
-                else if (!match_flag)
+                else if (!match_signal)
                     next_state = IDLE;
                 else
                     next_state = MATCH;
