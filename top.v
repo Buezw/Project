@@ -1,7 +1,7 @@
-module top (CLOCK_50, KEY, HEX0, HEX1, HEX2, HEX3, HEX4, HEX5, LEDR, VGA_R, VGA_G, VGA_B, VGA_HS, VGA_VS, KEY4);
+module top (CLOCK_50, KEY, HEX0, HEX1, HEX2, HEX3, HEX4, HEX5, LEDR, VGA_R, VGA_G, VGA_B, VGA_HS, VGA_VS);
 
     input CLOCK_50;
-    input [0:0] KEY;
+    input [3:0] KEY;
 
     output [6:0] HEX0;
     output [6:0] HEX1;
@@ -17,14 +17,14 @@ module top (CLOCK_50, KEY, HEX0, HEX1, HEX2, HEX3, HEX4, HEX5, LEDR, VGA_R, VGA_
     output [3:0] VGA_B;
     output VGA_HS;
     output VGA_VS;
-
-    input KEY4;
-
+    
     wire clk_50;
     wire reset;
+    wire KEY4;
 
     assign clk_50 = CLOCK_50;
     assign reset = ~KEY[0];
+    assign KEY4 = ~KEY[3];
 
     wire clk_25;
     clk_div2 div25(clk_50, reset, clk_25);
