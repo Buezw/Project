@@ -12,9 +12,7 @@ module order_generator (clk, reset, buy_price, sell_price, KEY4);
 
     reg [1:0] key4_sync;
 
-    //=============================
     // Clock divider
-    //=============================
     always @(posedge clk or posedge reset) 
     begin
         if (reset) 

@@ -1,6 +1,4 @@
-// =====================================================
 // Module: matching_engine
-// =====================================================
 
 module matching_engine (clk, reset, buy_price, sell_price,match_signal, trade_price, best_bid, best_ask);
     input clk;

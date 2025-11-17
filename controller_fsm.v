@@ -1,3 +1,5 @@
+// controller_fsm
+
 module controller_fsm (clk, reset, match_signal, halt_flag, state, enable_count);
     input clk;
     input reset;
