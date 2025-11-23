@@ -1,35 +1,34 @@
-module top (CLOCK_50, KEY, HEX0, HEX1, HEX2, HEX3, HEX4, HEX5, LEDR, VGA_R, VGA_G, VGA_B, VGA_HS, VGA_VS,
-             AUD_ADCDAT, AUD_ADCLRCK, AUD_BCLK, AUD_DACDAT, AUD_DACLRCK, AUD_XCK,
-             FPGA_I2C_SCLK, FPGA_I2C_SDAT);
+module top (
+    input CLOCK_50,
+    input [3:0] KEY,
 
-    input CLOCK_50;
-    input [3:0] KEY;
+    output [6:0] HEX0,
+    output [6:0] HEX1,
+    output [6:0] HEX2,
+    output [6:0] HEX3,
+    output [6:0] HEX4,
+    output [6:0] HEX5,
 
-    output [6:0] HEX0;
-    output [6:0] HEX1;
-    output [6:0] HEX2;
-    output [6:0] HEX3;
-    output [6:0] HEX4;
-    output [6:0] HEX5;
+    output [9:0] LEDR,
 
-    output [9:0] LEDR;
+    output [3:0] VGA_R,
+    output [3:0] VGA_G,
+    output [3:0] VGA_B,
+    output VGA_HS,
+    output VGA_VS,
 
-    output [3:0] VGA_R;
-    output [3:0] VGA_G;
-    output [3:0] VGA_B;
-    output VGA_HS;
-    output VGA_VS;
-
-    input  AUD_ADCDAT;
-    inout  AUD_ADCLRCK;
-    inout  AUD_BCLK;
-    output AUD_DACDAT;
-    inout  AUD_DACLRCK;
-    output AUD_XCK;
+    // --- Audio Interface Ports (音频接口) ---
+    input  AUD_ADCDAT,
+    inout  AUD_ADCLRCK,
+    inout  AUD_BCLK,
+    output AUD_DACDAT,
+    inout  AUD_DACLRCK,
+    output AUD_XCK,
 
     // --- I2C Configuration Ports (I2C 配置接口) ---
     output FPGA_I2C_SCLK,
     inout  FPGA_I2C_SDAT
+);
     
     wire clk_50;
     wire reset;
