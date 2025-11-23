@@ -1,4 +1,6 @@
-module top (CLOCK_50, KEY, HEX0, HEX1, HEX2, HEX3, HEX4, HEX5, LEDR, VGA_R, VGA_G, VGA_B, VGA_HS, VGA_VS);
+module top (CLOCK_50, KEY, HEX0, HEX1, HEX2, HEX3, HEX4, HEX5, LEDR, VGA_R, VGA_G, VGA_B, VGA_HS, VGA_VS,
+             AUD_ADCDAT, AUD_ADCLRCK, AUD_BCLK, AUD_DACDAT, AUD_DACLRCK, AUD_XCK,
+             FPGA_I2C_SCLK, FPGA_I2C_SDAT);
 
     input CLOCK_50;
     input [3:0] KEY;
@@ -17,6 +19,17 @@ module top (CLOCK_50, KEY, HEX0, HEX1, HEX2, HEX3, HEX4, HEX5, LEDR, VGA_R, VGA_
     output [3:0] VGA_B;
     output VGA_HS;
     output VGA_VS;
+
+    input  AUD_ADCDAT;
+    inout  AUD_ADCLRCK;
+    inout  AUD_BCLK;
+    output AUD_DACDAT;
+    inout  AUD_DACLRCK;
+    output AUD_XCK;
+
+    // --- I2C Configuration Ports (I2C 配置接口) ---
+    output FPGA_I2C_SCLK,
+    inout  FPGA_I2C_SDAT
     
     wire clk_50;
     wire reset;
@@ -55,5 +68,45 @@ module top (CLOCK_50, KEY, HEX0, HEX1, HEX2, HEX3, HEX4, HEX5, LEDR, VGA_R, VGA_
     display_hex display_unit(buy_price, sell_price, spread_now, trade_count, state, halt_signal, match_signal,
                              HEX0, HEX1, HEX2, HEX3, HEX4, HEX5, LEDR);
 
+wire [31:0] left_channel_audio;
+    wire [31:0] right_channel_audio;
+    wire audio_trigger;
+
+    // 触发逻辑：当 match_signal 和 enable_count 都为高时
+    assign audio_trigger = match_signal & enable_count;
+
+    // 1. 音频生成模块 (Tone Generator)
+    audio_tone_generator tone_gen (
+        .clk(clk_50),
+        .reset(reset),
+        .trigger_signal(audio_trigger),
+        .left_channel(left_channel_audio),
+        .right_channel(right_channel_audio)
+    );
+
+    // 2. 音频时钟 (Audio Clock)
+    // 直接使用 50MHz 作为 WM8731 的主时钟 (XCK)
+    assign AUD_XCK = clk_50; 
+
+    // 3. 音频控制器 (Audio Controller - I2S Driver)
+    // 负责发送数据到音频芯片
+    Audio_Controller audio_control (
+        .clk(clk_50),
+        .rst_n(!reset),
+        .left_data(left_channel_audio[31:16]),  // 取高16位以匹配大多数驱动
+        .right_data(right_channel_audio[31:16]),
+        .AUD_BCLK(AUD_BCLK),
+        .AUD_DACLRCK(AUD_DACLRCK),
+        .AUD_DACDAT(AUD_DACDAT)
+    );
+
+    // 4. 音频配置 (Audio Config - I2C)
+    // 配置 WM8731 芯片开启并设置音量
+    avconf audio_config (
+        .CLOCK_50(clk_50),
+        .reset(reset),
+        .FPGA_I2C_SCLK(FPGA_I2C_SCLK),
+        .FPGA_I2C_SDAT(FPGA_I2C_SDAT)
+    );
 
 endmodule
