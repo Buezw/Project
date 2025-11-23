@@ -1,8 +1,8 @@
 // Module: Counter
 
-module counter (clk, reset, match_signal, enable_count, trade_count, halt_signal);
+module counter (slow_clk, reset, match_signal, enable_count, trade_count, halt_signal);
 
-    input clk;
+    input slow_clk;
     input reset;
     input match_signal;
     input enable_count;
@@ -10,20 +10,6 @@ module counter (clk, reset, match_signal, enable_count, trade_count, halt_signal
     output reg halt_signal;
 
     reg [25:0] div;
-
-    always @(posedge clk or posedge reset) 
-    begin
-        if (reset) 
-        begin
-            div <= 0;
-        end 
-        else 
-        begin
-            div <= div + 1;
-        end
-    end
-
-    wire slow_clk = div[25];
 
 always @(posedge slow_clk or posedge reset) begin
     if (reset) begin
