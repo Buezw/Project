@@ -37,9 +37,10 @@ module top (
     // ========================================================================
     wire reset = ~KEY[0];
     wire clk_25;
-    wire clk_50;
+	 wire clk_50;
     wire slow_clk;
     assign clk_50 = CLOCK_50;
+
 
     // 交易信号
     wire [7:0] buy_price, sell_price, trade_price, spread_now, trade_count, best_bid, best_ask;
@@ -77,7 +78,7 @@ module top (
     clk_div2 div25(.clk_in(CLOCK_50), .reset(reset), .clk_out(clk_25));
 
     // 2. 交易核心
-order_generator generator(clk_50, reset, buy_price, sell_price, KEY, slow_clk);
+    order_generator generator(clk_50, reset, buy_price, sell_price, KEY, slow_clk);
 
     matching_engine engine(clk_50, reset, buy_price, sell_price, match_signal, trade_price, best_bid, best_ask);
 
@@ -155,6 +156,4 @@ order_generator generator(clk_50, reset, buy_price, sell_price, KEY, slow_clk);
         .B(vga_b_4bit)
     );
 
-
 endmodule
-
