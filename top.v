@@ -20,11 +20,9 @@ module top (CLOCK_50, KEY, HEX0, HEX1, HEX2, HEX3, HEX4, HEX5, LEDR, VGA_R, VGA_
     
     wire clk_50;
     wire reset;
-    wire KEY4;
 
     assign clk_50 = CLOCK_50;
     assign reset = ~KEY[0];
-    assign KEY4 = ~KEY[3];
 
     wire clk_25;
     clk_div2 div25(clk_50, reset, clk_25);
@@ -43,7 +41,7 @@ module top (CLOCK_50, KEY, HEX0, HEX1, HEX2, HEX3, HEX4, HEX5, LEDR, VGA_R, VGA_
     wire halt_signal;
     wire enable_count;
 
-    order_generator generator(clk_50, reset, buy_price, sell_price, KEY4);
+    order_generator generator(clk_50, reset, buy_price, sell_price, KEY[3]);
 
     matching_engine engine(clk_50, reset, buy_price, sell_price, match_signal, trade_price, best_bid, best_ask);
 
