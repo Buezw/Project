@@ -10,9 +10,7 @@ module order_generator (clk, reset, buy_price, sell_price, KEY, slow_clk);
     reg [15:0] lfsr1;
     reg [15:0] lfsr2;
     reg [25:0] div;
-
-    reg [1:0] key4_sync;
-
+    
     // Clock divider
     always @(posedge clk or posedge reset) 
 
