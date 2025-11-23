@@ -13,7 +13,7 @@ module counter (clk, reset, match_signal, enable_count, trade_count, halt_signal
     reg halt_signal;
 
 
-    parameter MAX_TRADES = 8'd9999;
+    parameter MAX_TRADES = 8'd99;
 
     always @(posedge clk or posedge reset) begin
         if (reset) begin
