@@ -1,7 +1,7 @@
 // Module: Spread Calculator
 
 
-module spread (clk, reset, match_signal, enable_count, buy_price, sell_price, spread);
+module spread (clk, reset, match_signal, enable_count, buy_price, sell_price, spread_now);
 
     input clk;              
     input reset;            
@@ -10,7 +10,7 @@ module spread (clk, reset, match_signal, enable_count, buy_price, sell_price, sp
     input [7:0] buy_price;
     input [7:0] sell_price; 
     
-    output [7:0] spread;    
+    output [7:0] spread_now;    
     reg [7:0] spread;
 
     wire [7:0] calculated_spread;
@@ -29,6 +29,8 @@ module spread (clk, reset, match_signal, enable_count, buy_price, sell_price, sp
         end
         // 否则，保持上一个值不变（这是关键的“捕获”逻辑）
     end
+	 
+	 assign spread_now = spread;
 
 endmodule
 
