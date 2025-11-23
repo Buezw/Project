@@ -9,7 +9,23 @@ module counter (clk, reset, match_signal, enable_count, trade_count, halt_signal
     output reg [7:0] trade_count;
     output reg halt_signal;
 
-always @(posedge clk or posedge reset) begin
+    reg [25:0] div;
+
+    always @(posedge clk or posedge reset) 
+    begin
+        if (reset) 
+        begin
+            div <= 0;
+        end 
+        else 
+        begin
+            div <= div + 1;
+        end
+    end
+
+    wire slow_clk = div[25];
+
+always @(posedge slow_clk or posedge reset) begin
     if (reset) begin
         trade_count <= 8'd0;
         halt_signal <= 1'b0;
