@@ -55,28 +55,29 @@ module top (
                              HEX0, HEX1, HEX2, HEX3, HEX4, HEX5, LEDR);
 
     vga_controller vga_ctrl_inst (
-        .clk_25mhz(clk_25), 
-        .reset(reset), 
-        .h_cnt(h_cnt), 
-        .v_cnt(v_cnt), 
-        .hsync(VGA_HS), 
-        .vsync(VGA_VS), 
-        .video_on(video_on)
+        clk_25, 
+        reset, 
+        h_cnt, 
+        v_cnt, 
+        VGA_HS, 
+        VGA_VS, 
+        video_on
     );
 
     vga_trend_display vga_trend_inst (
-        .clk(CLOCK_50),          
-        .reset(reset),
-        .video_on(video_on),     
-        .h_cnt(h_cnt),           
-        .v_cnt(v_cnt),           
-        .trade_price(trade_price), 
-        .match_signal(match_signal), 
-        .spread(spread_now),     
-        .trade_count(trade_count), 
-        .R(vga_r_4bit), 
-        .G(vga_g_4bit), 
-        .B(vga_b_4bit)
+        CLOCK_50, 
+        reset,
+        video_on, 
+        h_cnt, 
+        v_cnt, 
+        trade_price, 
+        match_signal, 
+        spread_now, 
+        trade_count, 
+        vga_r_4bit, 
+        vga_g_4bit, 
+        vga_b_4bit
     );
 endmodule
+
 
