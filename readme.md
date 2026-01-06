@@ -100,6 +100,6 @@ git clone [https://github.com/Shinoaki798/FPGA-Matching-Engine.git](https://gith
 ## 6. Contributors
 
 * **Shinoaki798** (Andrew An)
-* **Buezw** (Buezwqwg)
+* **Buezw** (Jingnan Huang)
 
 ---
